@@ -13,6 +13,7 @@ import axios from 'axios';
 import { ScreenHeaderBtn, NearbyJobCard } from '../../components';
 import { COLORS, icons, SIZES } from '../../constants';
 import styles from '../../styles/search';
+import Pagination from '../../components/common/pagination/Pagination';
 
 const JobSearch = () => {
   const params = useSearchParams();
@@ -78,7 +79,9 @@ const JobSearch = () => {
               handlePress={() => router.back()}
             />
           ),
-          headerTitle: '',
+          headerTitle: 'Kết quả',
+          headerTitleAlign: 'center',
+          headerTitleStyle: { fontSize: SIZES.large, fontWeight: '700' },
         }}
       />
 
@@ -107,33 +110,13 @@ const JobSearch = () => {
             </View>
           </>
         )}
-        ListFooterComponent={() => (
-          <View style={styles.footerContainer}>
-            <TouchableOpacity
-              style={styles.paginationButton}
-              onPress={() => handlePagination('left')}
-            >
-              <Image
-                source={icons.chevronLeft}
-                style={styles.paginationImage}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-            <View style={styles.paginationTextBox}>
-              <Text style={styles.paginationText}>{page}</Text>
-            </View>
-            <TouchableOpacity
-              style={styles.paginationButton}
-              onPress={() => handlePagination('right')}
-            >
-              <Image
-                source={icons.chevronRight}
-                style={styles.paginationImage}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          </View>
-        )}
+        ListFooterComponent={() => {
+          if (!searchLoader) {
+            return (
+              <Pagination handlePagination={handlePagination} page={page} />
+            );
+          }
+        }}
       />
     </SafeAreaView>
   );

@@ -30,7 +30,7 @@ const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
         </Text>
         <View style={styles.infoWrapper}>
           <Text style={styles.publisher(selectedJob, item)}>
-            {item.job_publisher} -
+            ${item.job_publisher}k -
           </Text>
           <Text style={styles.location}> {item.job_country}</Text>
         </View>

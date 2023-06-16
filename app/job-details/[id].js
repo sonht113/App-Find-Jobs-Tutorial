@@ -19,6 +19,7 @@ import {
 } from '../../components';
 import useFetch from '../../hooks/useFetch';
 import { COLORS, SIZES, icons } from '../../constants';
+import { jobs } from '../../__mock__';
 
 const tabs = ['About', 'Qualifications', 'Responsibilities'];
 
@@ -42,20 +43,31 @@ const JobDetails = () => {
     switch (activeTab) {
       case 'About':
         return (
-          <JobAbout info={data[0]?.job_description ?? 'No data provided'} />
+          <JobAbout
+            info={
+              jobs.find((job) => job.job_id == param.id)?.job_description ??
+              'No data provided'
+            }
+          />
         );
       case 'Qualifications':
         return (
           <Specifics
             title={'Qualifications'}
-            points={data[0]?.job_highlights?.Qualifications ?? ['N/A']}
+            points={
+              jobs.find((job) => job.job_id == param.id)?.job_highlights
+                ?.Qualifications ?? ['N/A']
+            }
           />
         );
       case 'Responsibilities':
         return (
           <Specifics
             title={'Responsibilities'}
-            points={data[0]?.job_highlights?.Responsibilities ?? ['N/A']}
+            points={
+              jobs.find((job) => job.job_id == param.id)?.job_highlights
+                ?.Responsibilities ?? ['N/A']
+            }
           />
         );
       default:
@@ -90,7 +102,7 @@ const JobDetails = () => {
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         >
-          {isLoading ? (
+          {/* {isLoading ? (
             <ActivityIndicator size={'large'} color={COLORS.primary} />
           ) : error ? (
             <Text style={{ textAlign: 'center' }}>Something went wrong</Text>
@@ -111,11 +123,25 @@ const JobDetails = () => {
               />
               {displayTabContent()}
             </View>
-          )}
+          )} */}
+          <View style={{ padding: SIZES.medium, paddingBottom: 100 }}>
+            <Company
+              logo={jobs.find((job) => job.job_id == param.id).employer_logo}
+              title={jobs.find((job) => job.job_id == param.id).job_title}
+              name={jobs.find((job) => job.job_id == param.id).employer_name}
+              location={jobs.find((job) => job.job_id == param.id).job_country}
+            />
+            <JobTabs
+              tabs={tabs}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
+            {displayTabContent()}
+          </View>
         </ScrollView>
         <JobFooter
           url={
-            data[0]?.job_google_link ??
+            jobs.find((job) => job.job_id == param.id)?.job_google_link ??
             'https://careers.google.com/jobs/results/'
           }
         />

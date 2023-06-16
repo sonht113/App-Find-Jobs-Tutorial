@@ -14,6 +14,7 @@ import { ScreenHeaderBtn, NearbyJobCard } from '../../components';
 import { COLORS, icons, SIZES } from '../../constants';
 import styles from '../../styles/search';
 import Pagination from '../../components/common/pagination/Pagination';
+import { jobs } from '../../__mock__';
 
 const JobSearch = () => {
   const params = useSearchParams();
@@ -55,16 +56,16 @@ const JobSearch = () => {
   const handlePagination = (direction) => {
     if (direction === 'left' && page > 1) {
       setPage(page - 1);
-      handleSearch();
+      //handleSearch();
     } else if (direction === 'right') {
       setPage(page + 1);
-      handleSearch();
+      // handleSearch();
     }
   };
 
-  useEffect(() => {
-    handleSearch();
-  }, []);
+  // useEffect(() => {
+  //   handleSearch();
+  // }, []);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -86,7 +87,7 @@ const JobSearch = () => {
       />
 
       <FlatList
-        data={searchResult}
+        data={jobs.filter((job) => job.employer_name.includes(params.id))}
         renderItem={({ item }) => (
           <NearbyJobCard
             job={item}
@@ -101,13 +102,13 @@ const JobSearch = () => {
               <Text style={styles.searchTitle}>{params.id}</Text>
               <Text style={styles.noOfSearchedJobs}>Job Opportunities</Text>
             </View>
-            <View style={styles.loaderContainer}>
+            {/* <View style={styles.loaderContainer}>
               {searchLoader ? (
                 <ActivityIndicator size="large" color={COLORS.primary} />
               ) : (
                 searchError && <Text>Oops something went wrong</Text>
               )}
-            </View>
+            </View> */}
           </>
         )}
         ListFooterComponent={() => {

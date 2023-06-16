@@ -12,6 +12,7 @@ import styles from './popularjobs.style';
 import { COLORS, SIZES } from '../../../constants';
 import PopularJobCard from '../../common/cards/popular/PopularJobCard';
 import useFetch from '../../../hooks/useFetch';
+import { jobs } from '../../../__mock__';
 
 const Popularjobs = () => {
   const router = useRouter();
@@ -34,13 +35,13 @@ const Popularjobs = () => {
       </View>
 
       <View style={styles.cardsContainer}>
-        {isLoading ? (
+        {/* {isLoading ? (
           <ActivityIndicator size="large" color={COLORS.primary} />
         ) : error ? (
           <Text style={{ textAlign: 'center' }}>Some thing went wrong</Text>
         ) : (
           <FlatList
-            data={data}
+            data={jobs}
             renderItem={({ item }) => (
               <PopularJobCard item={item} handleCardPress={handleCardPress} />
             )}
@@ -48,7 +49,16 @@ const Popularjobs = () => {
             contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal
           />
-        )}
+        )} */}
+        <FlatList
+          data={jobs}
+          renderItem={({ item }) => (
+            <PopularJobCard item={item} handleCardPress={handleCardPress} />
+          )}
+          keyExtractor={(item) => item?.job_id}
+          contentContainerStyle={{ columnGap: SIZES.medium }}
+          horizontal
+        />
       </View>
     </View>
   );

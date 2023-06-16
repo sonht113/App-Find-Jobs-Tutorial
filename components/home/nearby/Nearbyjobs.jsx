@@ -12,6 +12,7 @@ import styles from './nearbyjobs.style';
 import { COLORS, SIZES } from '../../../constants';
 import useFetch from '../../../hooks/useFetch';
 import NearbyJobCard from '../../common/cards/nearby/NearbyJobCard';
+import { jobs } from '../../../__mock__';
 
 const Nearbyjobs = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const Nearbyjobs = () => {
       </View>
 
       <View style={styles.cardsContainer}>
-        {isLoading ? (
+        {/* {isLoading ? (
           <ActivityIndicator size="large" color={COLORS.primary} />
         ) : error ? (
           <Text style={{ textAlign: 'center' }}>Some thing went wrong</Text>
@@ -45,7 +46,14 @@ const Nearbyjobs = () => {
               />
             ))}
           </>
-        )}
+        )} */}
+        {jobs?.map((job, index) => (
+          <NearbyJobCard
+            key={job?.job_id}
+            job={job}
+            handleNavigate={() => router.push(`/job-details/${job.job_id}`)}
+          />
+        ))}
       </View>
     </View>
   );
